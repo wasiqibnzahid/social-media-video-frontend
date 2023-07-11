@@ -53,28 +53,31 @@ function Home() {
   const handleSubmit = () => {
     fetchTwitterVideo();
   };
-  const intervalRef = useRef(0);
+  const intervalRef = useRef(15);
   function handleProgress() {
     setProgress(intervalRef.current);
-    const interval = setInterval(handleInterval, 50);
-    function handleInterval() {
+    const interval = setInterval(() => {
       if (intervalRef.current < 80) {
-        intervalRef.current += 1;
+        intervalRef.current += 15;
         setProgress(intervalRef.current);
       } else {
         clearInterval(interval);
       }
-    }
+    }, 1500);
   }
   const fetchTwitterVideo = async () => {
     setStatus("processing");
     try {
+      setProgress(15);
+      intervalRef.current = 15;
       handleProgress();
       const data = await providerFunctions[selectedProvider](url);
       if (data.success === "true") {
         setData(data.data);
         intervalRef.current = 100;
-        setProgress(100);
+        setTimeout(() => {
+          setProgress(100);
+        }, 1000);
         setStatus("success");
       } else {
         setData({ message: data.message });
@@ -90,7 +93,8 @@ function Home() {
     setData({});
     setStatus("");
     setUrl("");
-    setProgress(0);
+    intervalRef.current = 15;
+    setProgress(15);
   }, [selectedProvider]);
   return (
     <div>

@@ -1,5 +1,4 @@
 import axios from "axios";
-// import * as Pinterest from "@myno_21/pinterest-scraper";
 async function handleTwitterDownload(url) {
   let tweet_id = url.match("[0-9]{10,20}");
   return await fetch(
@@ -9,9 +8,11 @@ async function handleTwitterDownload(url) {
 
 async function handleFacebookDownload(url) {
   try {
-    let data = await axios.get(`http://localhost:3000/facebook?url=${url}`);
+    let data = await axios.get(
+      `https://beautiful-gumption-a90fa5.netlify.app/.netlify/functions/api/facebook?url=${url}`
+    );
 
-    const thumbnail = data.data.data[0].thumbnail;
+    const thumbnail = data.data.data[0].thumbnail ?? "";
     data = data.data.data
       .filter((item) => item.url.includes("http"))
       .map((item) => ({
@@ -37,8 +38,10 @@ async function handleFacebookDownload(url) {
 }
 async function handleInstagramDownload(url) {
   try {
-    let data = await axios.get(`http://localhost:3000/instagram?url=${url}`);
-    const thumbnail = data.data.data[0].thumbnail;
+    let data = await axios.get(
+      `https://beautiful-gumption-a90fa5.netlify.app/.netlify/functions/api/instagram?url=${url}`
+    );
+    const thumbnail = data.data.data[0].thumbnail ?? "";
     data = data.data.data
       .filter(
         (item) =>
@@ -71,7 +74,9 @@ async function handleInstagramDownload(url) {
 async function handlePinterestDownload(url) {
   try {
     let data = await axios
-      .get(`http://localhost:3000/pinterest?url=${url}`)
+      .get(
+        `https://beautiful-gumption-a90fa5.netlify.app/.netlify/functions/api/pinterest?url=${url}`
+      )
       .then((res) => res.data);
     return {
       success: "true",
@@ -86,7 +91,7 @@ async function handlePinterestDownload(url) {
         name: data.title,
         username: data.user.name,
         status_type: "video",
-        thumbnail: data.user.imageURL,
+        thumbnail: data.user.imageURL ?? "",
       },
     };
   } catch (e) {

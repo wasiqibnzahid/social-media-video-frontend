@@ -2,6 +2,9 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import { DownloadButton } from "../../atoms";
 
 function Success(props) {
+  function handleErrorImage(e) {
+    e.target.src = "https://roadmaptoprofit.com/wp-content/uploads/2018/10/video-placeholder.jpg"
+  }
   return (
     <div className="card mb-3 shadow animate__animated animate__fadeIn">
       <div className="row g-0">
@@ -12,6 +15,7 @@ function Success(props) {
             }}
             src={props.data.thumbnail}
             className="img-fluid p-1 shadow-sm"
+            onError={handleErrorImage}
             alt="..."
           />
         </div>
@@ -50,7 +54,7 @@ function Processing(props) {
           isLabelVisible={false}
           animateOnRender
           bgColor={props.color ?? "red"}
-          completed={props.completed || 60}
+          completed={props.completed ?? 0}
         />
       </div>
     </div>

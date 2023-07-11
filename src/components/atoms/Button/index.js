@@ -14,7 +14,7 @@ function SubmitButton({ handleSubmit, ...props }) {
 
 function DownloadButton(props) {
   return (
-    <a href={props.target} target="_blank" rel="noreferrer" className="m-1">
+    <a href={props.target} target="_blank" download rel="noreferrer" className="m-1">
       <button type="button" className="download-button">
         {props.text}
       </button>
